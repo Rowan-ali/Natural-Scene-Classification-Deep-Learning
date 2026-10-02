@@ -1,443 +1,383 @@
-# 🌍 Natural Scene Image Classification
+# 🌄 Natural Scene Classification --- Deep Learning
 
-An end-to-end deep learning computer vision system for **multi-class natural scene classification**, developed using TensorFlow/Keras and deployed through an interactive Streamlit application.
+```{=html}
+<p align="center">
+```
+`<strong>`{=html}End-to-End Computer Vision • CNN • Transfer Learning •
+MobileNetV2 • Grad-CAM • Streamlit`</strong>`{=html}
+```{=html}
+</p>
+```
+```{=html}
+<p align="center">
+```
+`<a href="https://natural-scene-classification-deep-learning-2y3hmumqcgvuqglvsrv.streamlit.app/">`{=html}`<strong>`{=html}🚀
+Live Application`</strong>`{=html}`</a>`{=html}  • 
+`<a href="notebook/Natural_Scene_Classification.ipynb">`{=html}`<strong>`{=html}📓
+Project Notebook`</strong>`{=html}`</a>`{=html}  • 
+`<a href="report/Natural_Scene_Classification_Final_Report.pdf">`{=html}`<strong>`{=html}📄
+Final Report`</strong>`{=html}`</a>`{=html}
+```{=html}
+</p>
+```
 
-The system classifies an input image into one of six natural-scene categories:
+------------------------------------------------------------------------
 
-**Buildings · Forest · Glacier · Mountain · Sea · Street**
+## 🚀 Live Application
 
-The project covers the complete machine learning workflow, including image exploration, preprocessing, data augmentation, baseline CNN development, transfer learning, controlled fine-tuning, model evaluation, error analysis, explainability using Grad-CAM, external-image inference, model export, and interactive deployment.
+### 👉 [Launch Natural Scene Classification](https://natural-scene-classification-deep-learning-2y3hmumqcgvuqglvsrv.streamlit.app/)
 
----
+Upload a natural-scene image and receive a predicted scene category,
+confidence score, and complete class-probability distribution from the
+deployed fine-tuned MobileNetV2 model.
+
+------------------------------------------------------------------------
 
 ## 📌 Project Overview
 
-Natural scene recognition is a **multi-class image classification problem** in which each input image is assigned exactly one class from six mutually exclusive scene categories.
+**Natural Scene Classification** is an end-to-end Computer Vision
+project designed to classify outdoor images into six scene categories:
 
-A custom Convolutional Neural Network (CNN) was first developed as a baseline. Transfer learning was then applied using **MobileNetV2 pretrained on ImageNet**, followed by controlled fine-tuning of upper backbone layers.
+`buildings` · `forest` · `glacier` · `mountain` · `sea` · `street`
 
-The final fine-tuned MobileNetV2 substantially outperformed the baseline model and was selected as the production model.
+The project covers the complete deep-learning lifecycle: exploratory
+image analysis, preprocessing, augmentation, baseline CNN development,
+transfer learning with MobileNetV2, controlled fine-tuning, model
+evaluation, error analysis, Grad-CAM explainability, model export, and
+real-time deployment using Streamlit.
 
----
+The final fine-tuned MobileNetV2 achieved **92.17% test accuracy** and
+**92.35% macro F1-score**, substantially improving over the custom CNN
+baseline.
 
-## 🎯 Supported Classes
+------------------------------------------------------------------------
 
-The model predicts one of the following six classes:
+## 🎯 Project Objectives
 
-| Index | Class |
-|---:|---|
-| 0 | Buildings |
-| 1 | Forest |
-| 2 | Glacier |
-| 3 | Mountain |
-| 4 | Sea |
-| 5 | Street |
+-   Build a reproducible multi-class image-classification pipeline.
+-   Inspect class balance, image dimensions, channels, and pixel
+    distributions.
+-   Apply appropriate image preprocessing and augmentation.
+-   Develop a custom CNN baseline from scratch.
+-   Apply transfer learning using pretrained MobileNetV2 features.
+-   Fine-tune selected pretrained layers using a controlled learning
+    rate.
+-   Compare models using validation and untouched test-set performance.
+-   Analyze class-level errors using a confusion matrix and
+    classification report.
+-   Explain model decisions using Grad-CAM.
+-   Validate the final model on unseen external images.
+-   Export the trained model for reuse.
+-   Deploy the final classifier through an interactive Streamlit
+    application.
 
-> **Important:** The class order must remain unchanged because it corresponds directly to the output indices of the trained model.
+------------------------------------------------------------------------
 
----
+## 🗂️ Dataset
 
-## 🧠 Final Model
+The project uses a six-class natural-scene image dataset organized into
+training, testing, and prediction directories.
 
-The production model uses **MobileNetV2** as a pretrained convolutional feature extractor with a custom classification head.
+### Classes
 
-The model was first trained using frozen pretrained features and was subsequently improved through controlled fine-tuning using a smaller learning rate.
+  Class          Description
+  -------------- -------------------------------------
+  🏢 Buildings   Urban and architectural scenes
+  🌲 Forest      Forest and woodland environments
+  🧊 Glacier     Snow, ice, and glacier landscapes
+  ⛰️ Mountain    Mountain and rocky landscapes
+  🌊 Sea         Ocean and coastal scenes
+  🛣️ Street      Roads and urban street environments
 
-### Final Model Configuration
+### Development Split
 
-| Property | Value |
-|---|---|
-| Architecture | Fine-Tuned MobileNetV2 |
-| Pretrained Weights | ImageNet |
-| Input Size | `224 × 224 × 3` |
-| Number of Classes | 6 |
-| Trainable Parameters | 1,202,566 |
-| Validation Accuracy | 92.78% |
-| Test Accuracy | **92.17%** |
-| Macro F1-Score | **92.35%** |
-| Export Format | Keras `.keras` |
+  Split          Images
+  ------------ --------
+  Training       11,929
+  Validation      2,105
+  Test            3,000
 
-The final exported model is:
+The validation set was created from the training data using a fixed
+random seed, while the test set remained untouched during model
+selection.
 
-```text
-final_mobilenetv2_transfer_model.keras
+------------------------------------------------------------------------
+
+## 🧠 Complete Computer Vision Pipeline
+
+``` text
+Natural Scene Images
+        │
+        ▼
+Dataset Inspection & EDA
+        │
+        ▼
+Image Preprocessing
+        │
+        ├── RGB Conversion
+        ├── Image Resizing
+        └── Pixel Scaling
+        │
+        ▼
+Training-Time Augmentation
+        │
+        ├── Horizontal Flip
+        ├── Small Rotation
+        └── Random Zoom
+        │
+        ├──────────────────────────────┐
+        │                              │
+        ▼                              ▼
+Custom CNN                    MobileNetV2 Transfer Learning
+        │                              │
+        ▼                              ▼
+Baseline Evaluation             Frozen Feature Extraction
+                                       │
+                                       ▼
+                              Controlled Fine-Tuning
+                                       │
+                                       ▼
+                               Final Model Evaluation
+                                       │
+                    ┌──────────────────┼──────────────────┐
+                    ▼                  ▼                  ▼
+               Error Analysis      Grad-CAM        External Images
+                    │                  │                  │
+                    └──────────────────┼──────────────────┘
+                                       ▼
+                                  Model Export
+                                       │
+                                       ▼
+                              Streamlit Deployment
 ```
 
----
+------------------------------------------------------------------------
 
-## 📊 Model Comparison
+# 🔬 Modeling Experiments
 
-Two principal models were evaluated during development:
+## 1. Custom CNN Baseline
 
-| Model | Input Size | Trainable Parameters | Validation Accuracy | Test Accuracy | Macro F1 |
-|---|---:|---:|---:|---:|---:|
-| Baseline CNN | 150 × 150 × 3 | 423,302 | 82.28% | 82.30% | 82.50% |
-| **Fine-Tuned MobileNetV2** | **224 × 224 × 3** | **1,202,566** | **92.78%** | **92.17%** | **92.35%** |
+A convolutional neural network was developed from scratch to establish a
+strong project-specific baseline.
 
-Compared with the baseline CNN, transfer learning improved:
+### Architecture
 
-- Validation accuracy by approximately **10.50 percentage points**
-- Test accuracy by approximately **9.87 percentage points**
-- Macro F1-score by approximately **9.85 percentage points**
-
-The fine-tuned MobileNetV2 was therefore selected as the final model because it demonstrated substantially stronger predictive performance and generalization on unseen data.
-
----
-
-## 🔍 Error Analysis
-
-The final model achieved strong performance across all six classes.
-
-The most challenging distinction was between:
-
-```text
-Glacier ↔ Mountain
+``` text
+Input Image (150 × 150 × 3)
+        ↓
+Conv2D (32) + BatchNorm + Pooling
+        ↓
+Conv2D (64) + BatchNorm + Pooling
+        ↓
+Conv2D (128) + BatchNorm + Pooling
+        ↓
+Conv2D (256) + BatchNorm + Pooling
+        ↓
+Global Average Pooling
+        ↓
+Dense (128)
+        ↓
+Dropout
+        ↓
+Softmax (6 Classes)
 ```
 
-This confusion is understandable because these classes can share similar visual characteristics, including rocky terrain, snow, elevation patterns, and natural backgrounds.
+### Baseline Performance
 
-Other observed confusion occurred between:
+  Metric                        Score
+  ---------------------- ------------
+  Validation Accuracy      **82.28%**
+  Test Accuracy            **82.30%**
+  Macro F1-score           **82.50%**
+  Trainable Parameters        423,302
 
-```text
-Buildings ↔ Street
-```
+The nearly identical validation and test accuracy indicates consistent
+final generalization, although the training history showed some
+overfitting tendency during development.
 
-because street scenes frequently contain buildings and other urban structures.
+------------------------------------------------------------------------
 
-The strongest-performing categories included **Forest** and **Sea**, while **Glacier** and **Mountain** remained the most visually challenging pair.
+## 2. Transfer Learning with MobileNetV2
 
----
+MobileNetV2 pretrained on ImageNet was used as the feature-extraction
+backbone.
 
-## 🔥 Explainability with Grad-CAM
+The transfer-learning pipeline used:
 
-The project includes **Grad-CAM (Gradient-weighted Class Activation Mapping)** to improve model interpretability.
+-   Input size: **224 × 224 × 3**
+-   ImageNet pretrained weights
+-   Global Average Pooling
+-   Dropout regularization
+-   Six-class Softmax output
+-   Embedded MobileNetV2-compatible rescaling
+-   Frozen feature-extraction stage followed by controlled fine-tuning
 
-Grad-CAM produces a heatmap showing which spatial regions of an image contributed most strongly to the model's prediction.
+### Training Strategy
 
-For each analyzed image, the notebook displays:
+The model was first trained with the pretrained backbone frozen. A
+second stage then enabled controlled fine-tuning of selected upper
+backbone layers while keeping Batch Normalization layers frozen.
 
-1. The original image
-2. The Grad-CAM activation heatmap
-3. The heatmap overlaid on the original image
-4. The predicted class
-5. The prediction confidence
+`ReduceLROnPlateau` and `EarlyStopping` were used to improve convergence
+and restore the weights associated with the strongest validation
+behavior.
 
-This provides qualitative evidence that the model is using meaningful visual regions rather than relying only on the final classification score.
+------------------------------------------------------------------------
 
----
+## 🏆 Final Model Performance
 
-## ⚙️ Training Strategy
+### Fine-Tuned MobileNetV2
 
-The final training workflow incorporated several techniques designed to improve generalization and training stability.
+  Metric                           Score
+  ---------------------- ---------------
+  Validation Accuracy         **92.78%**
+  Test Accuracy               **92.17%**
+  Macro F1-score              **92.35%**
+  Weighted F1-score           **92.14%**
+  Test Loss                   **0.1959**
+  Trainable Parameters     **1,202,566**
 
-### Data Augmentation
+### Improvement Over Baseline
 
-Training images were augmented using lightweight transformations including:
+  Metric                  Custom CNN   Fine-Tuned MobileNetV2     Improvement
+  --------------------- ------------ ------------------------ ---------------
+  Validation Accuracy         82.28%               **92.78%**   **+10.50 pp**
+  Test Accuracy               82.30%               **92.17%**    **+9.87 pp**
+  Macro F1-score              82.50%               **92.35%**    **+9.85 pp**
 
-- Horizontal flipping
-- Small rotations
-- Small zoom transformations
+Transfer learning produced a substantial improvement while preserving
+strong validation-to-test consistency.
 
-Augmentation was applied only during training.
+------------------------------------------------------------------------
 
-Validation and test images were not augmented.
+## 📊 Per-Class Evaluation
 
-### Transfer Learning
+  Class         Precision   Recall   F1-score
+  ----------- ----------- -------- ----------
+  Buildings        93.71%   91.99%     92.84%
+  Forest           98.94%   98.73%     98.84%
+  Glacier          86.86%   86.08%     86.47%
+  Mountain         87.18%   85.52%     86.35%
+  Sea              94.32%   97.65%     95.95%
+  Street           93.10%   94.21%     93.65%
 
-MobileNetV2 pretrained on ImageNet was used to leverage previously learned visual representations.
+The strongest performance was observed for **forest** and **sea**. The
+most challenging distinction was between **glacier** and **mountain**,
+which share similar snow-covered, rocky, and large-scale landscape
+features.
 
-Training was performed in two stages:
+------------------------------------------------------------------------
 
-**Stage 1 — Feature Extraction**
+# 🔎 Error Analysis
 
-The MobileNetV2 backbone was frozen while the custom classification head was trained.
+The final confusion matrix revealed several meaningful visual
+ambiguities:
 
-**Stage 2 — Controlled Fine-Tuning**
+-   **Glacier → Mountain:** 58 images
+-   **Mountain → Glacier:** 62 images
+-   **Buildings → Street:** 32 images
+-   **Street → Buildings:** 26 images
 
-A limited number of upper MobileNetV2 layers were made trainable and optimization continued using a significantly smaller learning rate.
+These errors are visually plausible because glacier and mountain scenes
+often share snow and rocky terrain, while buildings and street images
+frequently contain overlapping urban structures.
 
-Batch Normalization layers remained frozen during controlled fine-tuning to preserve stable pretrained statistics.
+------------------------------------------------------------------------
 
-### Training Callbacks
+# 🔥 Grad-CAM Explainability
 
-Training incorporated:
+Grad-CAM was implemented using the final MobileNetV2 convolutional
+representation to inspect which image regions influenced model
+predictions.
 
-- `EarlyStopping`
-- `ReduceLROnPlateau`
-- Best-weight restoration
+The final convolutional activation map has spatial dimensions of **7 ×
+7**, so the resulting heatmaps provide coarse localization rather than
+pixel-level segmentation.
 
-These mechanisms reduced unnecessary training and helped prevent substantial overfitting.
+### Example External Predictions
 
----
+  Image       Prediction     Confidence
+  ----------- ------------ ------------
+  10004.jpg   Street             74.92%
+  10005.jpg   Mountain           55.32%
+  10012.jpg   Street             95.85%
+  10013.jpg   Mountain           67.75%
+  10017.jpg   Mountain           82.47%
+  10021.jpg   Forest             98.40%
 
-## 🖥️ Streamlit Application
+The Grad-CAM visualizations showed spatially meaningful attention over
+relevant roads, buildings, mountain regions, and landscape structures
+rather than a fixed image location.
 
-A Streamlit interface is included to provide an easy-to-use inference system.
+------------------------------------------------------------------------
 
-The application allows a user to:
+# 🌐 Streamlit Application
 
-- Upload a new natural-scene image
-- Preview the uploaded image
-- Generate a prediction using the final MobileNetV2 model
-- View the predicted class
-- View prediction confidence
-- Inspect probabilities across all six classes
-- View model and inference information
+A professional Streamlit interface was developed to make the final
+classifier accessible without requiring notebook execution.
 
-The interface uses the same class ordering and input configuration used during model development.
+### 👉 [Open the Live Streamlit Application](https://natural-scene-classification-deep-learning-2y3hmumqcgvuqglvsrv.streamlit.app/)
 
----
+The application provides:
 
-## 📁 Project Structure
+-   Image upload for JPG, JPEG, PNG, and WebP files
+-   Uploaded-image preview
+-   Predicted scene category
+-   Prediction confidence
+-   Complete six-class probability distribution
+-   Model and inference information
+-   Cached model loading for efficient repeated predictions
+-   Responsive deployment-oriented interface
 
-```text
-scene_classifier_streamlit/
-│
-├── app.py
-│   └── Main Streamlit application
-│
-├── final_mobilenetv2_transfer_model.keras
-│   └── Exported final fine-tuned model
-│
-├── requirements.txt
-│   └── Required Python dependencies
-│
-├── README.md
-│   └── Project documentation and setup instructions
-│
-└── .streamlit/
-    └── config.toml
-        └── Streamlit interface configuration
-```
+The application performs **inference only**. It does not retrain the
+neural network when the application starts.
 
-The complete development notebook contains the full training, evaluation, error-analysis, Grad-CAM, and model-selection workflow.
-
----
-
-# 🚀 Local Setup and Installation
-
-## 1. Prerequisites
-
-The application requires Python and the dependencies listed in `requirements.txt`.
-
-Using a virtual environment is strongly recommended to isolate project dependencies.
-
----
-
-## 2. Open the Project
-
-Open the `scene_classifier_streamlit` folder in VS Code or navigate to it using a terminal.
-
-Example:
-
-```powershell
-cd path\to\scene_classifier_streamlit
-```
-
----
-
-## 3. Activate the Virtual Environment
-
-If an existing virtual environment is already configured, activate it before running the application.
-
-### Windows PowerShell
-
-```powershell
-path\to\.venv\Scripts\Activate.ps1
-```
-
-### Windows Command Prompt
-
-```cmd
-path\to\.venv\Scripts\activate
-```
-
-After activation, verify the active interpreter:
-
-```powershell
-python -c "import sys; print(sys.executable)"
-```
-
-The returned path should point to the intended virtual environment.
-
----
-
-## 4. Install Dependencies
-
-If the required packages are not already installed:
-
-```powershell
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-The application requires the packages specified in:
-
-```text
-requirements.txt
-```
-
-including TensorFlow, Streamlit, NumPy, Pandas, and Pillow.
-
----
-
-## 5. Add the Trained Model
-
-Ensure the exported model is located in the **same directory as `app.py`**:
-
-```text
-scene_classifier_streamlit/
-├── app.py
-└── final_mobilenetv2_transfer_model.keras
-```
-
-The filename must remain:
-
-```text
-final_mobilenetv2_transfer_model.keras
-```
-
-because the application uses this filename when loading the model.
-
----
-
-## 6. Verify TensorFlow and Streamlit
-
-Before launching the interface, the environment can be verified using:
-
-```powershell
-python -c "import tensorflow as tf; import streamlit as st; print('TensorFlow:', tf.__version__); print('Streamlit:', st.__version__)"
-```
-
-If both versions are displayed without an import error, the environment is ready.
-
----
-
-## 7. Run the Application
-
-Start the Streamlit application with:
-
-```powershell
-python -m streamlit run app.py
-```
-
-Using `python -m streamlit` ensures that Streamlit runs using the currently selected Python environment.
-
-After startup, Streamlit will display a local URL, typically:
-
-```text
-http://localhost:8501
-```
-
-Open the URL in a web browser if it does not open automatically.
-
----
-
-# 🖼️ How to Use the Application
-
-Once the application is running:
-
-1. Open the Streamlit interface.
-2. Upload a supported natural-scene image.
-3. The image is converted to RGB.
-4. The image is resized to `224 × 224`.
-5. The trained MobileNetV2 model performs inference.
-6. The predicted scene class and confidence are displayed.
-7. The probability distribution across all six classes is shown.
-
-Supported upload formats include:
-
-```text
-JPG
-JPEG
-PNG
-WEBP
-```
-
----
-
-## 🔄 Inference Pipeline
-
-The production inference workflow is:
-
-```text
-New Image
-    │
-    ▼
-Image Upload
-    │
-    ▼
-RGB Conversion
-    │
-    ▼
-Resize to 224 × 224
-    │
-    ▼
-Float32 Tensor
-    │
-    ▼
-Fine-Tuned MobileNetV2
-    │
-    ▼
-Softmax Probabilities
-    │
-    ├──► Predicted Class
-    │
-    └──► Prediction Confidence
-```
-
----
+------------------------------------------------------------------------
 
 ## ⚠️ Important Preprocessing Note
 
-The exported final model already contains its required MobileNetV2 input rescaling operation.
+The exported Keras model already contains its own MobileNetV2-compatible
+preprocessing layer:
 
-Therefore, the Streamlit application **does not call**:
-
-```python
-tf.keras.applications.mobilenet_v2.preprocess_input()
+``` text
+Raw RGB pixels [0, 255]
+        ↓
+Rescaling(1 / 127.5, offset = -1)
+        ↓
+Model input range [-1, 1]
 ```
 
-again during inference.
+Therefore, `tf.keras.applications.mobilenet_v2.preprocess_input()` must
+**not** be applied again outside the model.
 
-External images are converted to RGB, resized to `224 × 224`, converted to `float32`, and supplied to the exported model in the original image-value range expected by the integrated preprocessing layer.
+Applying preprocessing twice would change the numerical input
+distribution and could significantly degrade predictions.
 
-Applying MobileNetV2 preprocessing a second time would create an inconsistent inference pipeline and could negatively affect predictions.
+------------------------------------------------------------------------
 
----
+# 💾 Exported Model
 
-# 💾 Loading the Exported Model
+The final trained network is exported as:
 
-The final model can be loaded independently from the Streamlit application using TensorFlow/Keras:
+``` text
+final_mobilenetv2_transfer_model.keras
+```
 
-```python
+It can be loaded directly using:
+
+``` python
 import tensorflow as tf
 
 model = tf.keras.models.load_model(
-    "final_mobilenetv2_transfer_model.keras",
+    "model/final_mobilenetv2_transfer_model.keras",
     compile=False
 )
-
-print(model.input_shape)
-print(model.output_shape)
 ```
 
-Expected input:
+### Class Order
 
-```text
-(None, 224, 224, 3)
-```
-
-Expected output:
-
-```text
-(None, 6)
-```
-
-The six output positions correspond to:
-
-```python
-CLASS_NAMES = [
+``` python
+class_names = [
     "buildings",
     "forest",
     "glacier",
@@ -447,129 +387,322 @@ CLASS_NAMES = [
 ]
 ```
 
----
+Preserving this exact order is essential when mapping Softmax output
+indices to class labels.
 
-## 🧪 Example Standalone Prediction
+------------------------------------------------------------------------
 
-The exported model can also be used without Streamlit:
+# 🖥️ Running the Application Locally
 
-```python
-import numpy as np
-import tensorflow as tf
-from PIL import Image
+## 1. Clone the Repository
 
-CLASS_NAMES = [
-    "buildings",
-    "forest",
-    "glacier",
-    "mountain",
-    "sea",
-    "street",
-]
-
-model = tf.keras.models.load_model(
-    "final_mobilenetv2_transfer_model.keras",
-    compile=False
-)
-
-image = Image.open("example.jpg").convert("RGB")
-image = image.resize((224, 224))
-
-image_array = np.asarray(image, dtype=np.float32)
-input_batch = np.expand_dims(image_array, axis=0)
-
-probabilities = model.predict(input_batch, verbose=0)[0]
-
-predicted_index = int(np.argmax(probabilities))
-predicted_class = CLASS_NAMES[predicted_index]
-confidence = float(probabilities[predicted_index])
-
-print(f"Predicted class: {predicted_class}")
-print(f"Confidence: {confidence:.2%}")
+``` bash
+git clone <YOUR-REPOSITORY-URL>
+cd Natural-Scene-Classification-Deep-Learning
 ```
 
----
+## 2. Create a Virtual Environment
 
-# 📈 Final Results
+### Windows
 
-The final Fine-Tuned MobileNetV2 achieved:
-
-```text
-Validation Accuracy : 92.78%
-Test Accuracy       : 92.17%
-Macro F1-Score      : 92.35%
+``` bash
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-These results represent a substantial improvement over the custom baseline CNN and demonstrate the effectiveness of pretrained visual representations and controlled fine-tuning for natural-scene recognition.
+### macOS / Linux
 
----
+``` bash
+python -m venv .venv
+source .venv/bin/activate
+```
 
-## 🔮 Potential Future Improvements
+## 3. Install Dependencies
 
-Possible extensions include:
+``` bash
+python -m pip install -r streamlit_app/requirements.txt
+```
 
-- Training with a larger and more diverse dataset
-- Additional hyperparameter optimization
-- Experimenting with EfficientNet, ResNet, or newer pretrained architectures
-- More extensive controlled fine-tuning
-- Improved calibration of predicted probabilities
-- Additional explainability techniques
-- Expanded analysis of difficult Glacier/Mountain examples
-- Model compression or quantization for lightweight deployment
-- Cloud deployment of the Streamlit application
-- Automated testing of the inference pipeline
+## 4. Run Streamlit
 
----
+From the repository root:
 
-## 🛠️ Technology Stack
+``` bash
+python -m streamlit run streamlit_app/app.py
+```
 
-| Component | Technology |
-|---|---|
-| Programming Language | Python |
-| Deep Learning | TensorFlow / Keras |
-| Transfer Learning | MobileNetV2 |
-| Image Processing | TensorFlow / Pillow |
-| Data Analysis | NumPy / Pandas |
-| Explainability | Grad-CAM |
-| User Interface | Streamlit |
-| Development | Google Colab / VS Code |
-| Model Format | Keras `.keras` |
+Streamlit will normally open the local application at
+`http://localhost:8501`.
 
----
+------------------------------------------------------------------------
 
-## 📌 Reproducibility Notes
+# 📁 Repository Structure
 
-For reliable inference:
+``` text
+Natural-Scene-Classification-Deep-Learning/
+│
+├── README.md
+├── .gitignore
+│
+├── notebook/
+│   └── Natural_Scene_Classification.ipynb
+│
+├── model/
+│   └── final_mobilenetv2_transfer_model.keras
+│
+├── report/
+│   └── Natural_Scene_Classification_Final_Report.pdf
+│
+└── streamlit_app/
+    ├── app.py
+    ├── requirements.txt
+    └── .streamlit/
+        └── config.toml
+```
 
-- Keep the original class order unchanged.
-- Use RGB images.
-- Resize input images to `224 × 224`.
-- Do not duplicate the preprocessing already embedded in the model.
-- Use the exported final model rather than rebuilding its architecture manually.
-- Run Streamlit using the same Python environment in which the required dependencies are installed.
+The structure separates experimentation, trained artifacts,
+documentation, and deployment code to keep the repository clear and
+maintainable.
 
----
+------------------------------------------------------------------------
 
-## ⚠️ Limitations
+# 🛠️ Technology Stack
 
-Although the model demonstrates strong performance, predictions may be less reliable for:
+### Programming & Data Analysis
 
-- Images substantially different from the training distribution
-- Images containing multiple competing scene types
-- Highly ambiguous Glacier/Mountain environments
-- Urban scenes where Buildings and Street characteristics overlap
-- Extremely low-quality, heavily cropped, or visually obstructed images
+-   Python
+-   NumPy
+-   Pandas
 
-The displayed confidence corresponds to the model's Softmax probability and should not be interpreted as a guarantee that a prediction is correct.
+### Computer Vision & Deep Learning
 
----
+-   TensorFlow
+-   Keras
+-   Convolutional Neural Networks
+-   MobileNetV2
+-   Transfer Learning
+-   Fine-Tuning
+-   Image Augmentation
 
-# 🏆 Conclusion
+### Evaluation & Visualization
 
-This project demonstrates a complete computer vision workflow for six-class natural scene classification.
+-   Matplotlib
+-   scikit-learn
+-   Confusion Matrix
+-   Classification Report
+-   Grad-CAM
 
-Starting from exploratory image analysis and a custom baseline CNN, the system was improved through ImageNet-based MobileNetV2 transfer learning and controlled fine-tuning. The final model achieved **92.17% test accuracy** and a **92.35% Macro F1-score**, substantially outperforming the baseline architecture.
+### Deployment
 
-The project extends beyond model training by incorporating systematic evaluation, error analysis, Grad-CAM explainability, reusable inference, model export, and a Streamlit deployment interface.
+-   Streamlit
+-   Keras model serialization
 
-The resulting system therefore represents an end-to-end workflow from **raw image data to an interpretable and deployable deep learning application**.
+------------------------------------------------------------------------
+
+# 📈 Evaluation Metrics
+
+Models were evaluated using:
+
+-   **Accuracy** --- overall proportion of correctly classified images.
+-   **Precision** --- reliability of predictions for each scene class.
+-   **Recall** --- proportion of each true class correctly identified.
+-   **F1-score** --- balance between precision and recall.
+-   **Macro F1-score** --- equal-weight performance across all six
+    classes.
+-   **Weighted F1-score** --- class-support-weighted F1 performance.
+-   **Confusion Matrix** --- detailed distribution of correct and
+    incorrect predictions.
+-   **Validation Loss** --- used during training and checkpoint
+    restoration.
+
+Using multiple metrics provides a more complete assessment than relying
+on accuracy alone.
+
+------------------------------------------------------------------------
+
+# 🧪 Experimental Principles
+
+### No Test-Based Model Selection
+
+The test set was kept separate from model-development decisions.
+Validation performance was used for model selection and training
+control.
+
+### Controlled Fine-Tuning
+
+Transfer learning was performed in stages rather than immediately
+updating the entire pretrained network with a large learning rate.
+
+### Early Stopping
+
+The strongest validation checkpoint was restored to reduce unnecessary
+overfitting.
+
+### Learning-Rate Scheduling
+
+`ReduceLROnPlateau` automatically reduced the learning rate when
+validation loss stopped improving.
+
+### Reproducible Class Mapping
+
+The six-class order is explicitly documented to ensure consistent
+training and deployment behavior.
+
+------------------------------------------------------------------------
+
+# 💡 Key Findings
+
+1.  **Transfer learning substantially improved classification
+    performance.**\
+    Fine-tuned MobileNetV2 increased test accuracy from **82.30% to
+    92.17%**.
+
+2.  **Pretrained visual representations were highly effective.**\
+    ImageNet features provided a much stronger starting point than
+    learning all visual representations from scratch.
+
+3.  **Forest and sea were the strongest classes.**\
+    Their visual characteristics were more distinctive in the evaluated
+    test set.
+
+4.  **Glacier and mountain were the most difficult pair.**\
+    Their shared snow, rock, and landscape characteristics produced the
+    largest cross-class confusion.
+
+5.  **Urban classes also showed meaningful overlap.**\
+    Buildings and street scenes can contain many of the same structural
+    features.
+
+6.  **Controlled fine-tuning improved generalization.**\
+    A small learning rate and selective trainability refined pretrained
+    features without discarding their useful representations.
+
+7.  **Explainability added qualitative validation.**\
+    Grad-CAM indicated that the model generally focused on semantically
+    relevant image regions.
+
+8.  **Deployment requires preprocessing consistency.**\
+    Because preprocessing is embedded inside the exported model,
+    inference code should supply raw resized RGB pixel values without
+    applying MobileNetV2 preprocessing a second time.
+
+------------------------------------------------------------------------
+
+# ⚠️ Limitations
+
+-   Visually similar scene categories can remain difficult to
+    distinguish.
+-   Performance reflects the distribution of the evaluated natural-scene
+    dataset.
+-   Grad-CAM provides coarse explanatory localization and is not a
+    segmentation method.
+-   Confidence scores should not be interpreted as guaranteed
+    probabilities of correctness.
+-   Additional evaluation on more diverse real-world images would
+    provide stronger evidence of deployment robustness.
+
+------------------------------------------------------------------------
+
+# 🔮 Future Improvements
+
+Potential extensions include:
+
+-   Evaluation with additional external scene datasets
+-   More targeted data for visually ambiguous class pairs
+-   Comparison with EfficientNet, ResNet, and other pretrained backbones
+-   Automated hyperparameter optimization
+-   Advanced augmentation strategies
+-   Confidence calibration
+-   More extensive Grad-CAM analysis
+-   REST API deployment
+-   Docker containerization
+-   CI/CD integration
+-   Deployment monitoring
+
+------------------------------------------------------------------------
+
+# 📚 Project Workflow Summary
+
+``` text
+Dataset Loading
+      ↓
+Exploratory Data Analysis
+      ↓
+Image Preprocessing
+      ↓
+Training Augmentation
+      ↓
+Custom CNN Baseline
+      ↓
+Baseline Evaluation
+      ↓
+MobileNetV2 Transfer Learning
+      ↓
+Frozen Feature Extraction
+      ↓
+Controlled Fine-Tuning
+      ↓
+Final Test Evaluation
+      ↓
+Confusion Matrix & Error Analysis
+      ↓
+Grad-CAM Explainability
+      ↓
+External Image Validation
+      ↓
+Model Export
+      ↓
+Streamlit Deployment
+```
+
+------------------------------------------------------------------------
+
+# 👩‍💻 Author
+
+**Rowan Ali**\
+Data Science Student --- Alexandria University
+
+Areas of interest:
+
+`Data Science` · `Machine Learning` · `Deep Learning` ·
+`Computer Vision` · `Data Analytics`
+
+------------------------------------------------------------------------
+
+## ⭐ Project Summary
+
+**Natural Scene Classification** demonstrates a complete Computer Vision
+lifecycle---from raw image exploration and a custom CNN baseline to
+pretrained feature extraction, controlled MobileNetV2 fine-tuning,
+detailed evaluation, explainable AI, model export, and real-time web
+deployment.
+
+The final fine-tuned MobileNetV2 achieved **92.17% test accuracy** and
+**92.35% macro F1-score**, improving test accuracy by **9.87 percentage
+points** over the custom CNN baseline.
+
+The project combines model development with experimental discipline,
+transparent evaluation, visual error interpretation, explainability,
+reproducible inference, and deployment-oriented engineering.
+
+------------------------------------------------------------------------
+
+## 🔗 Quick Links
+
+-   **Live Application:** [Natural Scene
+    Classification](https://natural-scene-classification-deep-learning-2y3hmumqcgvuqglvsrv.streamlit.app/)
+-   **Notebook:** [Complete Computer Vision
+    Notebook](notebook/Natural_Scene_Classification.ipynb)
+-   **Final Report:** [Project
+    Report](report/Natural_Scene_Classification_Final_Report.pdf)
+-   **Streamlit Application:** [Deployment Source](streamlit_app/app.py)
+
+```{=html}
+<p align="center">
+```
+`<strong>`{=html}🌄 Natural Scene
+Classification`</strong>`{=html}`<br>`{=html} From raw images to
+explainable real-time deep-learning predictions.
+```{=html}
+</p>
+```
