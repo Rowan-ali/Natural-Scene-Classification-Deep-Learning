@@ -674,12 +674,6 @@ reproducible inference, and deployment-oriented engineering.
     Report](report/Natural_Scene_Classification_Final_Report.pdf)
 -   **Streamlit Application:** [Deployment Source](streamlit_app/app.py)
 
-```{=html}
-<p align="center">
-```
-`<strong>`{=html}🌄 Natural Scene
-Classification`</strong>`{=html}`<br>`{=html} From raw images to
-explainable real-time deep-learning predictions.
-```{=html}
+
 </p>
 ```
