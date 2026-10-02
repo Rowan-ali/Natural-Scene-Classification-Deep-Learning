@@ -1,28 +1,5 @@
 # 🌄 Natural Scene Classification --- Deep Learning
 
-```{=html}
-<p align="center">
-```
-`<strong>`{=html}End-to-End Computer Vision • CNN • Transfer Learning •
-MobileNetV2 • Grad-CAM • Streamlit`</strong>`{=html}
-```{=html}
-</p>
-```
-```{=html}
-<p align="center">
-```
-`<a href="https://natural-scene-classification-deep-learning-2y3hmumqcgvuqglvsrv.streamlit.app/">`{=html}`<strong>`{=html}🚀
-Live Application`</strong>`{=html}`</a>`{=html}  • 
-`<a href="notebook/Natural_Scene_Classification.ipynb">`{=html}`<strong>`{=html}📓
-Project Notebook`</strong>`{=html}`</a>`{=html}  • 
-`<a href="report/Natural_Scene_Classification_Final_Report.pdf">`{=html}`<strong>`{=html}📄
-Final Report`</strong>`{=html}`</a>`{=html}
-```{=html}
-</p>
-```
-
-------------------------------------------------------------------------
-
 ## 🚀 Live Application
 
 ### 👉 [Launch Natural Scene Classification](https://natural-scene-classification-deep-learning-2y3hmumqcgvuqglvsrv.streamlit.app/)
